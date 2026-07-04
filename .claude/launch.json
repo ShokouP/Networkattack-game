@@ -12,7 +12,8 @@
       "name": "lightspeed-grid",
       "runtimeExecutable": "node",
       "runtimeArgs": ["server.js"],
-      "port": 3456,
+      "port": 3460,
+      "autoPort": true,
       "cwd": "${workspaceFolder}"
     }
   ]

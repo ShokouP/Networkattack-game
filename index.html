@@ -320,20 +320,44 @@
       <button id="start-defend-btn" class="start-btn" data-team="blue">防 守 方（蓝 队）</button>
       <button id="start-attack-btn" class="start-btn" data-team="red">进 攻 方（红 队）</button>
     </div>
+    <button id="start-pvp-btn" class="start-btn" style="margin-top:8px;background:linear-gradient(90deg,rgba(60,245,139,0.12),rgba(60,140,245,0.12));border-color:#3cf58b;">P V P 对 战 房 间</button>
     <button id="start-tutorial-btn" class="start-btn" style="margin-top:8px;" data-tutorial="0">教 学 模 式（三 日 PvE）</button>
   </div>
-  <div id="profile-panel" style="display:none;position:absolute;inset:0;z-index:35;background:rgba(5,7,5,0.96);flex-direction:column;align-items:center;gap:16px;padding:28px;overflow-y:auto;">
-    <h2 style="color:#3cf58b;letter-spacing:2px;">生涯档案</h2>
-    <div id="profile-summary" style="color:#7eb896;font-size:13px;text-align:center;line-height:1.6;"></div>
-    <div style="width:min(520px,90vw);border:1px solid #1a3a2a;padding:12px;background:rgba(0,0,0,0.3);">
-      <h3 style="color:#3cf58b;font-size:14px;margin-bottom:8px;">已解锁头衔</h3>
-      <div id="profile-titles" style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;"></div>
+  <div id="profile-panel" style="display:none;position:absolute;inset:0;z-index:35;background:linear-gradient(180deg,#0a0f0c 0%,#050705 100%);flex-direction:column;align-items:center;gap:0;padding:0;overflow-y:auto;font-family:inherit;">
+    <div id="profile-header" style="width:100%;max-width:720px;padding:28px 20px 18px;text-align:center;border-bottom:1px solid #1a3a2a;position:relative;">
+      <button id="close-profile-btn" style="position:absolute;top:16px;right:16px;background:transparent;border:1px solid #3cf58b;color:#3cf58b;padding:6px 14px;font-family:inherit;cursor:pointer;font-size:12px;letter-spacing:1px;">返 回</button>
+      <div id="profile-avatar" style="width:72px;height:72px;border-radius:50%;border:2px solid #3cf58b;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:28px;color:#3cf58b;background:rgba(60,245,139,0.08);box-shadow:0 0 18px rgba(60,245,139,0.15);">🛡</div>
+      <div id="profile-name-line" style="font-size:18px;color:#e8f5ec;letter-spacing:1px;margin-bottom:4px;"></div>
+      <div id="profile-title-line" style="font-size:13px;color:#7eb896;margin-bottom:10px;"></div>
+      <div id="profile-rank" style="display:inline-block;border:1px solid #3cf58b;color:#3cf58b;padding:3px 12px;font-size:11px;letter-spacing:1px;background:rgba(60,245,139,0.08);">见习工程师</div>
     </div>
-    <div style="width:min(520px,90vw);border:1px solid #1a3a2a;padding:12px;background:rgba(0,0,0,0.3);">
-      <h3 style="color:#3cf58b;font-size:14px;margin-bottom:8px;">成就</h3>
-      <div id="profile-achievements" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;"></div>
+    <div style="width:100%;max-width:720px;padding:18px 20px;display:flex;flex-direction:column;gap:18px;">
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
+        <div style="background:rgba(0,0,0,0.28);border:1px solid #1a3a2a;padding:10px 4px;text-align:center;"><div style="font-size:18px;color:#3cf58b;font-weight:bold;" id="stat-score">0</div><div style="font-size:10px;color:#5a7a6a;margin-top:2px;">生涯积分</div></div>
+        <div style="background:rgba(0,0,0,0.28);border:1px solid #1a3a2a;padding:10px 4px;text-align:center;"><div style="font-size:18px;color:#e8f5ec;font-weight:bold;" id="stat-games">0</div><div style="font-size:10px;color:#5a7a6a;margin-top:2px;">总场次</div></div>
+        <div style="background:rgba(0,0,0,0.28);border:1px solid #1a3a2a;padding:10px 4px;text-align:center;"><div style="font-size:18px;color:#3cf58b;font-weight:bold;" id="stat-wins">0</div><div style="font-size:10px;color:#5a7a6a;margin-top:2px;">胜场</div></div>
+        <div style="background:rgba(0,0,0,0.28);border:1px solid #1a3a2a;padding:10px 4px;text-align:center;"><div style="font-size:18px;color:#f0c030;font-weight:bold;" id="stat-streak">0</div><div style="font-size:10px;color:#5a7a6a;margin-top:2px;">最高连胜</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+        <div style="background:rgba(0,0,0,0.28);border:1px solid #1a3a2a;padding:8px 4px;text-align:center;"><div style="font-size:14px;color:#7eb896;" id="stat-wl">0/0</div><div style="font-size:10px;color:#5a7a6a;margin-top:2px;">胜/负</div></div>
+        <div style="background:rgba(0,0,0,0.28);border:1px solid #1a3a2a;padding:8px 4px;text-align:center;"><div style="font-size:14px;color:#7eb896;" id="stat-draws">0</div><div style="font-size:10px;color:#5a7a6a;margin-top:2px;">平局</div></div>
+        <div style="background:rgba(0,0,0,0.28);border:1px solid #1a3a2a;padding:8px 4px;text-align:center;"><div style="font-size:14px;color:#7eb896;" id="stat-perfect">0</div><div style="font-size:10px;color:#5a7a6a;margin-top:2px;">完胜</div></div>
+      </div>
+      <div style="background:rgba(0,0,0,0.28);border:1px solid #1a3a2a;padding:14px;">
+        <h3 style="color:#3cf58b;font-size:13px;margin-bottom:10px;letter-spacing:1px;">已解锁头衔 <span style="color:#5a7a6a;font-size:11px;">点击装备</span></h3>
+        <div id="profile-titles" style="display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-start;"></div>
+      </div>
+      <div style="background:rgba(0,0,0,0.28);border:1px solid #1a3a2a;padding:14px;">
+        <h3 style="color:#3cf58b;font-size:13px;margin-bottom:10px;letter-spacing:1px;">成就</h3>
+        <div id="profile-achievements" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;"></div>
+      </div>
+      <div id="profile-menu" style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding-bottom:20px;">
+        <button id="profile-friends-btn" style="background:rgba(0,0,0,0.28);border:1px solid #3c8cf5;color:#3c8cf5;padding:12px;font-family:inherit;cursor:pointer;font-size:13px;letter-spacing:1px;">好友</button>
+        <button id="profile-settings-btn" style="background:rgba(0,0,0,0.28);border:1px solid #7eb896;color:#7eb896;padding:12px;font-family:inherit;cursor:pointer;font-size:13px;letter-spacing:1px;">设置</button>
+        <button id="profile-logout-btn" style="background:rgba(0,0,0,0.28);border:1px solid #e04040;color:#e04040;padding:12px;font-family:inherit;cursor:pointer;font-size:13px;letter-spacing:1px;">切换账号</button>
+        <button id="profile-close-btn2" style="background:rgba(0,0,0,0.28);border:1px solid #3cf58b;color:#3cf58b;padding:12px;font-family:inherit;cursor:pointer;font-size:13px;letter-spacing:1px;">返回游戏</button>
+      </div>
     </div>
-    <button id="close-profile-btn" style="background:transparent;border:2px solid #3cf58b;color:#3cf58b;padding:10px 28px;font-family:inherit;cursor:pointer;font-size:14px;letter-spacing:1px;">返 回</button>
   </div>
 </div>
 
@@ -343,8 +367,8 @@ const MAX_POWER=10,START_POWER=7,POWER_REGEN=1.0,POWER_REGEN_FAST=1.5,FAST_REGEN
 const GAME_TIME_LIMIT=300;
 const LANE_H=140,LANES_Y=[110,310,510],LANE_NAMES=['暴露面','横向移动通道','核心资产区'];
 const LANE_X0=120,LANE_X1=1080,LANE_W=LANE_X1-LANE_X0;
-const TOWER_HP=1400,CORE_HP=3600;
-const TOWER_ATK=20,TOWER_ATK_SPD=1.0,TOWER_RANGE=120,TOWER_LATE_SCALE=1.5;
+const TOWER_HP=1600,CORE_HP=3800;
+const TOWER_ATK=24,TOWER_ATK_SPD=0.95,TOWER_RANGE=125,TOWER_LATE_SCALE=1.6;
 function getTowerAtk(){return game&&game.time>=FAST_REGEN_TIME?Math.round(TOWER_ATK*TOWER_LATE_SCALE):TOWER_ATK;}
 const BLUE_TOWER_X=280,RED_TOWER_X=920,TOWER_W=32,TOWER_H=60;
 const CORE_W=36,PER_LANE_CORE_H=100;
@@ -508,16 +532,24 @@ function updateAccountBar(){
 }
 function renderProfile(){
   if(!currentAccount)return;
-  const summary=document.getElementById('profile-summary');
   const s=currentAccount.stats||{};
   const title=titleById(currentAccount.title||'rookie');
-  summary.innerHTML=`${formatTitle(currentAccount)} ${currentAccount.username}<br>积分 <b style="color:#3cf58b">${currentAccount.score}</b><br>胜/负/平 ${s.wins||0}/${s.losses||0}/${s.draws||0} · 总场次 ${s.totalGames||0}<br>连胜 ${s.winStreak||0} · 最高连胜 ${s.maxWinStreak||0}`;
+  document.getElementById('profile-name-line').innerHTML=`${formatTitle(currentAccount)} ${currentAccount.username}`;
+  document.getElementById('profile-title-line').textContent=title.name;
+  document.getElementById('profile-rank').textContent='Lv.'+Math.floor((currentAccount.score||1000)/500)+' 网络安全员';
+  document.getElementById('stat-score').textContent=currentAccount.score||0;
+  document.getElementById('stat-games').textContent=s.totalGames||0;
+  document.getElementById('stat-wins').textContent=s.wins||0;
+  document.getElementById('stat-streak').textContent=s.maxWinStreak||0;
+  document.getElementById('stat-wl').textContent=`${s.wins||0}/${s.losses||0}`;
+  document.getElementById('stat-draws').textContent=s.draws||0;
+  document.getElementById('stat-perfect').textContent=s.perfectWins||0;
   const titleCtr=document.getElementById('profile-titles');titleCtr.innerHTML='';
   (currentAccount.titles||[]).forEach(tid=>{
     const t=titleById(tid);
     const el=document.createElement('div');
-    el.style.cssText=`border:1px solid ${t.color};color:${t.color};padding:4px 10px;font-size:12px;cursor:pointer;${currentAccount.title===tid?'background:rgba(255,255,255,0.08);':''}`;
-    el.textContent='['+t.name+']';el.title=t.name;
+    el.style.cssText=`border:1px solid ${t.color};color:${t.color};padding:5px 12px;font-size:12px;cursor:pointer;border-radius:2px;${currentAccount.title===tid?'background:rgba(255,255,255,0.1);box-shadow:0 0 8px '+t.color+'40;':''}`;
+    el.textContent='['+t.name+']';
     el.addEventListener('click',()=>{setAccountTitle(tid);renderProfile();});
     titleCtr.appendChild(el);
   });
@@ -525,13 +557,59 @@ function renderProfile(){
   ACHIEVEMENTS.forEach(a=>{
     const unlocked=(currentAccount.achievements||[]).includes(a.id);
     const el=document.createElement('div');
-    el.style.cssText=`border:1px solid ${unlocked?'#3cf58b':'#1a3a2a'};padding:6px 8px;background:${unlocked?'rgba(60,245,139,0.08)':'rgba(0,0,0,0.25)'};opacity:${unlocked?1:0.55};`;
-    el.innerHTML=`<div style="font-size:12px;color:${unlocked?'#3cf58b':'#7eb896'}">${a.name}</div><div style="font-size:10px;color:#5a7a6a">${a.desc}</div>`;
+    el.style.cssText=`border:1px solid ${unlocked?'#3cf58b':'#1a3a2a'};padding:8px;border-radius:2px;background:${unlocked?'rgba(60,245,139,0.08)':'rgba(0,0,0,0.25)'};opacity:${unlocked?1:0.5};`;
+    el.innerHTML=`<div style="font-size:12px;color:${unlocked?'#3cf58b':'#7eb896'};font-weight:${unlocked?'bold':'normal'};">${a.name}</div><div style="font-size:10px;color:#5a7a6a;margin-top:3px;">${a.desc}</div>`;
     achCtr.appendChild(el);
   });
 }
 function openProfilePanel(){if(!currentAccount)return;renderProfile();document.getElementById('profile-panel').style.display='flex';}
 function closeProfilePanel(){document.getElementById('profile-panel').style.display='none';}
+function openPvpPanel(){
+  let panel=document.getElementById('pvp-panel');
+  if(!panel){
+    panel=document.createElement('div');
+    panel.id='pvp-panel';
+    panel.style.cssText='display:none;position:absolute;inset:0;z-index:35;background:linear-gradient(180deg,#0a0f0c 0%,#050705 100%);flex-direction:column;align-items:center;padding:28px 20px;overflow-y:auto;font-family:inherit;';
+    panel.innerHTML=`<div style="width:100%;max-width:560px;position:relative;text-align:center;padding-bottom:16px;border-bottom:1px solid #1a3a2a;margin-bottom:18px;"><button id="close-pvp-btn" style="position:absolute;top:0;right:0;background:transparent;border:1px solid #3cf58b;color:#3cf58b;padding:6px 14px;font-family:inherit;cursor:pointer;font-size:12px;letter-spacing:1px;">返 回</button><h2 style="color:#3cf58b;letter-spacing:2px;font-size:20px;">PVP 对战房间</h2><p style="color:#5a7a6a;font-size:12px;margin-top:4px;">创建或加入房间，与好友实时攻防</p></div><div style="width:100%;max-width:560px;display:flex;flex-direction:column;gap:12px;"><div style="background:rgba(0,0,0,0.28);border:1px solid #1a3a2a;padding:14px;"><h3 style="color:#3cf58b;font-size:13px;margin-bottom:10px;">创建房间</h3><div style="display:flex;gap:8px;"><input id="pvp-create-name" type="text" placeholder="房间名" maxlength="16" style="flex:1;background:#0a0c0f;border:1px solid #1a3a2a;color:#3cf58b;padding:8px 12px;font-family:inherit;font-size:13px;outline:none;"><button id="pvp-create-btn" style="background:transparent;border:1px solid #3cf58b;color:#3cf58b;padding:8px 18px;font-family:inherit;cursor:pointer;font-size:12px;letter-spacing:1px;">创 建</button></div></div><div style="background:rgba(0,0,0,0.28);border:1px solid #1a3a2a;padding:14px;"><h3 style="color:#3cf58b;font-size:13px;margin-bottom:10px;">加入房间</h3><div style="display:flex;gap:8px;"><input id="pvp-join-id" type="text" placeholder="房间号/房间名" style="flex:1;background:#0a0c0f;border:1px solid #1a3a2a;color:#3cf58b;padding:8px 12px;font-family:inherit;font-size:13px;outline:none;"><button id="pvp-join-btn" style="background:transparent;border:1px solid #3c8cf5;color:#3c8cf5;padding:8px 18px;font-family:inherit;cursor:pointer;font-size:12px;letter-spacing:1px;">加 入</button></div></div><div style="background:rgba(0,0,0,0.28);border:1px solid #1a3a2a;padding:14px;"><h3 style="color:#3cf58b;font-size:13px;margin-bottom:10px;">在线房间</h3><div id="pvp-room-list" style="display:flex;flex-direction:column;gap:8px;color:#7eb896;font-size:12px;min-height:60px;justify-content:center;align-items:center;">暂无在线房间</div></div></div>`;
+    document.getElementById('app').appendChild(panel);
+    document.getElementById('close-pvp-btn').addEventListener('click',()=>panel.style.display='none');
+    document.getElementById('pvp-create-btn').addEventListener('click',()=>{
+      const name=document.getElementById('pvp-create-name').value.trim()||'光速城对战';
+      const id=Math.random().toString(36).slice(2,8).toUpperCase();
+      showMessage(`房间 ${name}（${id}）创建成功，等待对手加入…`);
+      document.getElementById('pvp-room-list').innerHTML=`<div style="width:100%;display:flex;justify-content:space-between;align-items:center;border:1px solid #1a3a2a;padding:8px;background:rgba(60,245,139,0.06);"><span>${name} · ${id}</span><span style="color:#3cf58b;">等待中 1/2</span></div>`;
+    });
+    document.getElementById('pvp-join-btn').addEventListener('click',()=>{
+      const id=document.getElementById('pvp-join-id').value.trim();
+      if(!id){showMessage('请输入房间号或房间名');return;}
+      showMessage(`正在加入房间 ${id}…`);
+    });
+  }
+  panel.style.display='flex';
+}
+function openFriendsPanel(){
+  let panel=document.getElementById('friends-panel');
+  if(!panel){
+    panel=document.createElement('div');
+    panel.id='friends-panel';
+    panel.style.cssText='display:none;position:absolute;inset:0;z-index:36;background:linear-gradient(180deg,#0a0f0c 0%,#050705 100%);flex-direction:column;align-items:center;padding:28px 20px;overflow-y:auto;font-family:inherit;';
+    panel.innerHTML=`<div style="width:100%;max-width:560px;position:relative;text-align:center;padding-bottom:16px;border-bottom:1px solid #1a3a2a;margin-bottom:18px;"><button id="close-friends-btn" style="position:absolute;top:0;right:0;background:transparent;border:1px solid #3cf58b;color:#3cf58b;padding:6px 14px;font-family:inherit;cursor:pointer;font-size:12px;letter-spacing:1px;">返 回</button><h2 style="color:#3cf58b;letter-spacing:2px;font-size:20px;">好友</h2><p style="color:#5a7a6a;font-size:12px;margin-top:4px;">添加好友，发起对战或查看动态</p></div><div style="width:100%;max-width:560px;display:flex;flex-direction:column;gap:12px;"><div style="background:rgba(0,0,0,0.28);border:1px solid #1a3a2a;padding:14px;"><h3 style="color:#3cf58b;font-size:13px;margin-bottom:10px;">添加好友</h3><div style="display:flex;gap:8px;"><input id="friend-add-input" type="text" placeholder="输入用户名" style="flex:1;background:#0a0c0f;border:1px solid #1a3a2a;color:#3cf58b;padding:8px 12px;font-family:inherit;font-size:13px;outline:none;"><button id="friend-add-btn" style="background:transparent;border:1px solid #3cf58b;color:#3cf58b;padding:8px 18px;font-family:inherit;cursor:pointer;font-size:12px;letter-spacing:1px;">添 加</button></div></div><div style="background:rgba(0,0,0,0.28);border:1px solid #1a3a2a;padding:14px;"><h3 style="color:#3cf58b;font-size:13px;margin-bottom:10px;">好友列表</h3><div id="friend-list" style="display:flex;flex-direction:column;gap:8px;color:#7eb896;font-size:12px;min-height:80px;justify-content:center;align-items:center;">暂无好友</div></div></div>`;
+    document.getElementById('app').appendChild(panel);
+    document.getElementById('close-friends-btn').addEventListener('click',()=>panel.style.display='none');
+    document.getElementById('friend-add-btn').addEventListener('click',()=>{
+      const name=document.getElementById('friend-add-input').value.trim();
+      if(!name){showMessage('请输入用户名');return;}
+      showMessage(`已向 ${name} 发送好友请求`);
+      const list=document.getElementById('friend-list');
+      if(list.textContent==='暂无好友')list.innerHTML='';
+      const row=document.createElement('div');
+      row.style.cssText='width:100%;display:flex;justify-content:space-between;align-items:center;border:1px solid #1a3a2a;padding:8px;';
+      row.innerHTML=`<span>${name}</span><span style="color:#5a7a6a;">等待验证</span>`;
+      list.appendChild(row);
+    });
+  }
+  panel.style.display='flex';
+}
 function showAuthOverlay(){document.getElementById('account-overlay').style.display='flex';document.getElementById('overlay').style.display='none';}
 function hideAuthOverlay(){document.getElementById('account-overlay').style.display='none';document.getElementById('overlay').style.display='flex';}
 function switchAccount(){setToken(null);currentAccount=null;updateAccountBar();showAuthOverlay();}
@@ -550,6 +628,10 @@ function switchAccount(){setToken(null);currentAccount=null;updateAccountBar();s
   document.getElementById('profile-btn').addEventListener('click',openProfilePanel);
   document.getElementById('switch-account-btn').addEventListener('click',switchAccount);
   document.getElementById('close-profile-btn').addEventListener('click',closeProfilePanel);
+  document.getElementById('profile-close-btn2').addEventListener('click',closeProfilePanel);
+  document.getElementById('profile-logout-btn').addEventListener('click',switchAccount);
+  document.getElementById('profile-settings-btn').addEventListener('click',()=>showMessage('设置功能开发中'));
+  document.getElementById('profile-friends-btn').addEventListener('click',openFriendsPanel);
   loadAccount();
 })();
 
@@ -569,15 +651,15 @@ const BLUE_CARDS=[
 ];
 const RED_CARDS=[
   {id:'scan',name:'网络扫描',cost:2,type:'spell',hp:0,atk:0,atkSpd:0,range:0,speed:0,duration:0,desc:'揭示对方部署4秒',tag:'法术',color:'#f08040',spell:'reveal',revealTime:4},
-  {id:'phish',name:'钓鱼邮件',cost:4,type:'flying',hp:380,atk:90,atkSpd:0.6,range:65,speed:160,duration:0,desc:'飞过地面防线·直击塔',tag:'飞行',color:'#e0c040'},
-  {id:'sql_inject',name:'SQL注入',cost:5,type:'ground',hp:620,atk:155,atkSpd:0.7,range:55,speed:95,duration:0,desc:'对数据库塔伤害×2',tag:'地面',color:'#e04040',bonusVs:'db_tower'},
-  {id:'bruteforce',name:'暴力破解',cost:2,type:'ground',hp:320,atk:75,atkSpd:0.45,range:45,speed:90,duration:0,desc:'越打越疼（每3秒+18）',tag:'地面',color:'#f06030',ramping:true},
-  {id:'zeroday',name:'零日漏洞',cost:7,type:'spell',hp:0,atk:800,atkSpd:0,range:0,speed:0,duration:0,desc:'800伤害·无视护盾',tag:'法术',color:'#c030c0',spell:'directDmg',dmg:800,pierceShield:true},
-  {id:'ddos',name:'DDoS',cost:4,type:'spell',hp:0,atk:200,atkSpd:0,range:0,speed:0,duration:0,desc:'范围瘫痪3秒+200伤害',tag:'法术',color:'#a03030',spell:'aoeStun',dmg:200,stun:3,aoeRange:160},
-  {id:'ransomware',name:'勒索软件',cost:6,type:'ground',hp:1300,atk:125,atkSpd:0.6,range:50,speed:60,duration:0,desc:'高血量肉盾·坦克',tag:'地面',color:'#d02020',heavy:true},
-  {id:'backdoor',name:'后门',cost:4,type:'building',hp:520,atk:0,atkSpd:0,range:0,speed:0,duration:40,desc:'隐匿·每6秒生小兵',tag:'建筑',color:'#9040d0',stealth:true,spawnCd:6,spawnUnit:'minion'},
+  {id:'phish',name:'钓鱼邮件',cost:4,type:'flying',hp:300,atk:70,atkSpd:0.55,range:60,speed:145,duration:0,desc:'飞过地面防线·直击塔',tag:'飞行',color:'#e0c040'},
+  {id:'sql_inject',name:'SQL注入',cost:5,type:'ground',hp:520,atk:125,atkSpd:0.65,range:50,speed:85,duration:0,desc:'对数据库塔伤害×2',tag:'地面',color:'#e04040',bonusVs:'db_tower'},
+  {id:'bruteforce',name:'暴力破解',cost:2,type:'ground',hp:280,atk:62,atkSpd:0.45,range:45,speed:85,duration:0,desc:'越打越疼（每3秒+12）',tag:'地面',color:'#f06030',ramping:true},
+  {id:'zeroday',name:'零日漏洞',cost:7,type:'spell',hp:0,atk:600,atkSpd:0,range:0,speed:0,duration:0,desc:'600伤害·无视护盾',tag:'法术',color:'#c030c0',spell:'directDmg',dmg:600,pierceShield:true},
+  {id:'ddos',name:'DDoS',cost:4,type:'spell',hp:0,atk:160,atkSpd:0,range:0,speed:0,duration:0,desc:'范围瘫痪2.5秒+160伤害',tag:'法术',color:'#a03030',spell:'aoeStun',dmg:160,stun:2.5,aoeRange:160},
+  {id:'ransomware',name:'勒索软件',cost:6,type:'ground',hp:1050,atk:105,atkSpd:0.55,range:50,speed:55,duration:0,desc:'高血量肉盾·坦克',tag:'地面',color:'#d02020',heavy:true},
+  {id:'backdoor',name:'后门',cost:4,type:'building',hp:420,atk:0,atkSpd:0,range:0,speed:0,duration:35,desc:'隐匿·每7秒生小兵',tag:'建筑',color:'#9040d0',stealth:true,spawnCd:7,spawnUnit:'minion'},
   {id:'waterhole',name:'水坑攻击',cost:3,type:'spell',hp:0,atk:0,atkSpd:0,range:0,speed:0,duration:0,desc:'敌方最近塔5秒内攻速减半',tag:'法术',color:'#b06020',spell:'waterhole',whTime:5},
-  {id:'nday',name:'Nday漏洞',cost:5,type:'ground',hp:480,atk:95,atkSpd:0.55,range:60,speed:75,duration:0,desc:'对血量最低单位×2伤害',tag:'地面',color:'#d04080',prioLowest:true,bonusVs:'lowest_hp'},
+  {id:'nday',name:'Nday漏洞',cost:5,type:'ground',hp:420,atk:82,atkSpd:0.55,range:60,speed:70,duration:0,desc:'对血量最低单位×2伤害',tag:'地面',color:'#d04080',prioLowest:true,bonusVs:'lowest_hp'},
 ];
 
 let game=null,animId=null,selectedCard=null,mouseX=0,mouseY=0;
@@ -1630,6 +1712,7 @@ function bindStartButton(id, action){
 bindStartButton('start-defend-btn',()=>{tutorialDay=-1;startGame('blue');});
 bindStartButton('start-attack-btn',()=>{tutorialDay=-1;startGame('red');});
 bindStartButton('start-tutorial-btn',()=>startTutorial(0));
+bindStartButton('start-pvp-btn',openPvpPanel);
 
 // Intro cinematic
 const INTRO_LINES=[
