@@ -109,135 +109,176 @@
     #intro-skip { font-size: 9px; bottom: calc(12px + env(safe-area-inset-bottom)); right: calc(14px + env(safe-area-inset-right)); }
   }
   #hud {
-    min-height:44px; display:flex; align-items:center; justify-content:space-between;
-    padding:0 12px; border-bottom:1px solid #1a3a2a;
-    background:rgba(0,0,0,0.35); font-size:clamp(11px,2.8vw,14px); color:#7eb896;
-    gap:8px;
+    min-height:52px; display:flex; align-items:center; justify-content:space-between;
+    padding:0 14px; border-bottom:1px solid #1a3a2a;
+    background:linear-gradient(180deg, rgba(10,16,12,0.92) 0%, rgba(5,8,6,0.85) 100%); font-size:clamp(11px,2.8vw,14px); color:#7eb896;
+    gap:10px;
   }
-  .hud-item { display:flex; flex-direction:column; align-items:flex-start; gap:2px; }
+  .hud-item { display:flex; flex-direction:column; align-items:flex-start; gap:3px; }
   .hud-item.right { align-items:flex-end; }
   .hud-row { display:flex; align-items:center; gap:clamp(3px,1vw,7px); }
   .hud-label { color:#4a6b5a; font-size:clamp(8px,1.8vw,11px); text-transform:uppercase; letter-spacing:0.5px; }
-  .hud-value { color:#3cf58b; font-size:clamp(14px,3.6vw,19px); font-weight:bold; }
-  .hud-value.danger { color:#f53c3c; animation:pulse 0.6s infinite; }
-  #time-display.danger { color:#f53c3c; animation:pulse 0.6s infinite; }
-  .power-bar, .core-bar { width:clamp(40px,11vw,70px); height:4px; background:#0f1812; border-radius:2px; overflow:hidden; border:1px solid #1a2e20; }
-  .power-bar-inner { height:100%; background:linear-gradient(90deg,#3cf58b,#2ad46e); transition:width 0.15s; }
-  .core-bar-inner { height:100%; background:linear-gradient(90deg,#3cf58b,#2ad46e); transition:width 0.15s; }
-  .core-bars { display:flex; gap:2px; margin-top:1px; }
-  .mini-core-bar { width:clamp(12px,3.5vw,20px); height:3px; background:#0f1812; border-radius:1px; overflow:hidden; }
-  .mini-core-inner { height:100%; background:#3cf58b; transition:width 0.15s; }
-  @keyframes pulse { 50% { opacity:0.4; } }
-  #ai-threat { margin-top:1px; font-size:clamp(7px,1.8vw,9px); color:#c08080; max-width:90px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .hud-value { color:#3cf58b; font-size:clamp(14px,3.6vw,19px); font-weight:bold; text-shadow:0 0 12px rgba(60,245,139,0.18); }
+  .hud-value.danger { color:#f53c3c; animation:pulse 0.6s infinite; text-shadow:0 0 14px rgba(245,60,60,0.35); }
+  #time-display.danger { color:#f53c3c; animation:pulse 0.6s infinite; text-shadow:0 0 14px rgba(245,60,60,0.35); }
+  .power-bar, .core-bar { width:clamp(44px,11vw,74px); height:5px; background:#0f1812; border-radius:3px; overflow:hidden; border:1px solid #1a2e20; position:relative; }
+  .power-bar::after, .core-bar::after { content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(255,255,255,0.12), transparent 50%); pointer-events:none; }
+  .power-bar-inner { height:100%; background:linear-gradient(90deg,#3cf58b,#2ad46e); transition:width 0.15s; box-shadow:0 0 8px rgba(60,245,139,0.25); }
+  .core-bar-inner { height:100%; background:linear-gradient(90deg,#3cf58b,#2ad46e); transition:width 0.15s; box-shadow:0 0 8px rgba(60,245,139,0.2); }
+  .core-bars { display:flex; gap:3px; margin-top:1px; }
+  .mini-core-bar { width:clamp(14px,3.5vw,22px); height:4px; background:#0f1812; border-radius:2px; overflow:hidden; border:1px solid #1a2e20; }
+  .mini-core-inner { height:100%; background:linear-gradient(90deg,#3cf58b,#2ad46e); transition:width 0.15s; }
+  .mini-core-inner.danger { background:linear-gradient(90deg,#f53c3c,#c02020); box-shadow:0 0 6px rgba(245,60,60,0.35); }
+  @keyframes pulse { 50% { opacity:0.45; } }
+  #ai-threat { margin-top:2px; font-size:clamp(7px,1.8vw,9px); color:#c08080; max-width:100px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   #canvas-wrap { flex:1; position:relative; overflow:hidden; min-height:0; }
   canvas { display:block; width:100%; height:100%; }
   /* ── Card Hand ── */
   #card-hand {
-    height: auto; min-height: 100px; max-height: 134px;
+    height: auto; min-height: 112px; max-height: 148px;
     display: flex; align-items: center; justify-content: center; gap: 0;
-    padding: 7px 10px; border-top: 1px solid #1a3a2a; background: rgba(0,0,0,0.55);
+    padding: 9px 12px; border-top: 1px solid #1a3a2a;
+    background: linear-gradient(0deg, rgba(5,8,6,0.95) 0%, rgba(10,16,12,0.88) 100%);
     overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch;
     scrollbar-width: thin; scrollbar-color: #1a3a2a #0a0c0f;
   }
-  #card-hand::-webkit-scrollbar { height: 4px; }
-  #card-hand::-webkit-scrollbar-thumb { background: #1a3a2a; border-radius: 2px; }
+  #card-hand::-webkit-scrollbar { height: 5px; }
+  #card-hand::-webkit-scrollbar-track { background: #0a0c0f; }
+  #card-hand::-webkit-scrollbar-thumb { background: #1a3a2a; border-radius: 3px; }
   .card {
-    width: clamp(118px, 19vw, 160px); height: clamp(88px, 17vw, 114px);
-    background: #0b120f;
-    border: 2px solid #1a2e20; border-radius: 2px;
+    width: clamp(124px, 19vw, 168px); height: clamp(96px, 17vw, 122px);
+    background: linear-gradient(180deg, #0f1812 0%, #0a110d 100%);
+    border: 2px solid #1f3328; border-radius: 4px;
     cursor: pointer; position: relative; overflow: hidden; flex-shrink: 0;
-    transition: all 0.12s ease; margin: 0 4px;
-    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
+    transition: all 0.15s cubic-bezier(0.25,0.46,0.45,0.94); margin: 0 5px;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04), 0 4px 10px rgba(0,0,0,0.35);
     image-rendering: pixelated;
     touch-action: manipulation;
   }
-.card::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
-  background: var(--card-accent, #3cf58b);
-}
-.card:hover {
-  border-color: var(--card-accent, #3cf58b);
-  transform: translateY(-4px);
-  box-shadow: 0 0 0 1px var(--card-accent, #3cf58b), 0 6px 18px rgba(0,0,0,0.5);
-}
-.card.selected {
-  border-color: var(--card-accent, #3cf58b);
-  transform: translateY(-8px);
-  box-shadow: 0 0 0 2px var(--card-accent, #3cf58b), 0 10px 26px rgba(0,0,0,0.6);
-}
-.card.unaffordable { opacity: 0.32; pointer-events: none; filter: grayscale(0.8); }
-.card.used-up { opacity: 0.28; pointer-events: none; filter: grayscale(1) brightness(0.7); }
-.card.used-up::after {
-  content: '已耗尽';
-  position: absolute; inset: 0;
-  display: flex; align-items: center; justify-content: center;
-  background: rgba(0,0,0,0.45);
-  color: #f53c3c; font-size: clamp(10px, 2.4vw, 13px); font-weight: bold; letter-spacing: 2px;
-}
+  .card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--card-accent, #3cf58b);
+    box-shadow: 0 0 10px var(--card-accent, #3cf58b);
+  }
+  .card::after {
+    content: ''; position: absolute; top: 3px; left: 0; right: 0; height: 40%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.05), transparent);
+    pointer-events: none;
+  }
+  .card:hover {
+    border-color: var(--card-accent, #3cf58b);
+    transform: translateY(-6px);
+    box-shadow: 0 0 0 1px var(--card-accent, #3cf58b), 0 12px 28px rgba(0,0,0,0.55), inset 0 0 0 1px rgba(255,255,255,0.08);
+  }
+  .card.selected {
+    border-color: var(--card-accent, #3cf58b);
+    transform: translateY(-10px);
+    box-shadow: 0 0 0 2px var(--card-accent, #3cf58b), 0 16px 36px rgba(0,0,0,0.65), 0 0 24px var(--card-accent,#3cf58b)33;
+  }
+  .card.unaffordable { opacity: 0.28; pointer-events: none; filter: grayscale(0.85) brightness(0.8); }
+  .card.used-up { opacity: 0.24; pointer-events: none; filter: grayscale(1) brightness(0.65); }
+  .card.used-up::after {
+    content: '已耗尽';
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(0,0,0,0.55);
+    color: #f53c3c; font-size: clamp(10px, 2.4vw, 13px); font-weight: bold; letter-spacing: 2px;
+  }
   .card-inner {
     display: grid;
-    grid-template-columns: clamp(38px, 8vw, 48px) 1fr;
-    grid-template-rows: clamp(16px, 4vw, 20px) 1fr clamp(16px, 4vw, 20px);
-    height: 100%; padding: 5px 7px 5px 5px; position: relative; z-index: 1;
+    grid-template-columns: clamp(40px, 8vw, 50px) 1fr;
+    grid-template-rows: clamp(18px, 4vw, 22px) 1fr clamp(18px, 4vw, 22px);
+    height: 100%; padding: 6px 8px 6px 6px; position: relative; z-index: 1;
   }
   .card-pixel {
-    grid-row: 1 / 4; width: clamp(34px, 7vw, 42px); height: clamp(78px, 15vw, 98px);
-    background: #0a0f0c; border: 1px solid #1f3326;
+    grid-row: 1 / 4; width: clamp(36px, 7vw, 44px); height: clamp(84px, 15vw, 104px);
+    background: #0a0f0c; border: 1px solid #1f3326; border-radius: 2px;
     display: flex; align-items: center; justify-content: center;
     position: relative;
+    box-shadow: inset 0 0 12px rgba(0,0,0,0.6);
   }
-  .card-pixel canvas { width: clamp(30px, 6vw, 36px); height: clamp(68px, 13vw, 90px); image-rendering: pixelated; }
+  .card-pixel canvas { width: clamp(32px, 6vw, 38px); height: clamp(74px, 13vw, 96px); image-rendering: pixelated; }
   .card-header { grid-column: 2; display: flex; justify-content: space-between; align-items: center; }
-  .card-name { font-size: clamp(10px, 2.6vw, 13px); font-weight: bold; color: #e8f0e8; letter-spacing: 0.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: clamp(58px, 14vw, 84px); }
+  .card-name { font-size: clamp(10px, 2.6vw, 13px); font-weight: bold; color: #e8f0e8; letter-spacing: 0.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: clamp(62px, 14vw, 90px); }
   .card-cost {
     font-size: clamp(12px, 3.2vw, 15px); font-weight: bold; color: var(--card-accent, #3cf58b); line-height: 1;
     min-width: 18px; text-align: right;
   }
-  .card-body { grid-column: 2; display: flex; flex-direction: column; gap: 2px; padding-top: 2px; }
-  .card-desc { font-size: clamp(7px, 1.8vw, 9px); color: #7a9a88; line-height: 1.35; }
+  .card-body { grid-column: 2; display: flex; flex-direction: column; gap: 3px; padding-top: 2px; }
+  .card-desc { font-size: clamp(7px, 1.8vw, 9px); color: #8aa898; line-height: 1.4; }
   .card-stats { display: flex; gap: clamp(5px, 1.5vw, 9px); margin-top: auto; font-size: clamp(7px, 1.8vw, 9px); color: #5a7a6a; }
   .card-stat { display: flex; align-items: center; gap: 2px; }
-  .card-stat-val { color: #a0c0aa; font-weight: bold; }
+  .card-stat-val { color: #a8c8b2; font-weight: bold; }
   .card-footer { grid-column: 2; display: flex; justify-content: space-between; align-items: center; }
   .card-tag {
-    font-size: clamp(6px, 1.6vw, 8px); padding: 1px 4px; letter-spacing: 0.5px; text-transform: uppercase;
-    background: rgba(0,0,0,0.4); color: var(--card-accent, #3cf58b); border: 1px solid rgba(255,255,255,0.12);
+    font-size: clamp(6px, 1.6vw, 8px); padding: 1px 5px; letter-spacing: 0.5px; text-transform: uppercase;
+    background: rgba(0,0,0,0.45); color: var(--card-accent, #3cf58b); border: 1px solid rgba(255,255,255,0.12); border-radius: 2px;
   }
 .card-tag.flying { color: #d4b830; border-color: rgba(212,184,48,0.35); }
 .card-tag.spell { color: #b880f0; border-color: rgba(184,128,240,0.35); }
 .card-tag.building { color: #68a8e0; border-color: rgba(104,168,224,0.3); }
 .card-tag.ground { color: #e08850; border-color: rgba(224,136,80,0.3); }
+.card-cost-orb {
+  position:absolute; top:6px; right:6px; width:22px; height:22px; border-radius:50%;
+  background:radial-gradient(circle at 30% 30%, rgba(255,255,255,0.25), rgba(0,0,0,0.4) 60%);
+  border:1px solid var(--card-accent,#3cf58b); display:flex; align-items:center; justify-content:center;
+  font-size:11px; font-weight:bold; color:#e8f0e8; box-shadow:0 0 8px var(--card-accent,#3cf58b)33;
+}
+.card-rarity-glow { position:absolute; inset:0; pointer-events:none; opacity:0.08; background:var(--card-accent,#3cf58b); }
   #tooltip {
     position:absolute; pointer-events:none; z-index:10;
-    background:rgba(5,10,8,0.95); border:1px solid #2a4a3a;
-    border-radius:5px; padding:11px 15px; font-size:12px; color:#b8d4c3;
-    max-width:240px; display:none;
+    background:rgba(5,10,8,0.96); border:1px solid var(--card-accent,#2a4a3a);
+    border-radius:6px; padding:12px 16px; font-size:12px; color:#b8d4c3;
+    max-width:260px; display:none; box-shadow:0 8px 24px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.04);
+    backdrop-filter:blur(4px);
   }
+  #tooltip b { color:#e8f0e8; letter-spacing:0.5px; }
   #message {
-    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    position:absolute; top:46%; left:50%; transform:translate(-50%,-50%);
     pointer-events:none; z-index:20;
-    font-size:24px; color:#3cf58b; text-shadow:0 0 20px rgba(60,245,139,0.5);
-    display:none; text-align:center; line-height:1.5;
+    font-size:clamp(18px,4vw,26px); color:#3cf58b; text-shadow:0 0 24px rgba(60,245,139,0.55), 0 2px 8px rgba(0,0,0,0.8);
+    display:none; text-align:center; line-height:1.5; letter-spacing:1px;
+    background:rgba(0,0,0,0.42); padding:14px 26px; border:1px solid rgba(60,245,139,0.35); border-radius:4px;
+    backdrop-filter:blur(3px);
   }
+  #message.danger { color:#f53c3c; border-color:rgba(245,60,60,0.4); text-shadow:0 0 24px rgba(245,60,60,0.55), 0 2px 8px rgba(0,0,0,0.8); }
+  #message.warn { color:#f0c030; border-color:rgba(240,192,48,0.4); text-shadow:0 0 24px rgba(240,192,48,0.55), 0 2px 8px rgba(0,0,0,0.8); }
   #overlay {
-    position:absolute; inset:0; z-index:15; background:rgba(0,0,0,0.7);
+    position:absolute; inset:0; z-index:15;
+    background:radial-gradient(circle at 50% 35%, rgba(10,24,16,0.88) 0%, rgba(0,0,0,0.82) 70%);
     display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px;
     padding:24px; text-align:center;
   }
-  #overlay h1 { font-size:clamp(26px, 6vw, 36px); color:#3cf58b; letter-spacing:4px; text-shadow:0 0 30px rgba(60,245,139,0.4); }
-  #overlay p { color:#7eb896; font-size:clamp(12px, 3vw, 15px); max-width:min(520px, 90vw); text-align:center; line-height:1.6; }
+  #overlay h1 { font-size:clamp(28px, 6.5vw, 40px); color:#3cf58b; letter-spacing:5px; text-shadow:0 0 40px rgba(60,245,139,0.45); }
+  #overlay p { color:#8ab89a; font-size:clamp(12px, 3vw, 15px); max-width:min(520px, 90vw); text-align:center; line-height:1.7; }
   #overlay div { flex-wrap:wrap; justify-content:center; }
-  #overlay button {
+  #overlay button, .start-btn {
     background:transparent; border:2px solid #3cf58b; color:#3cf58b;
     padding:clamp(10px, 3vw, 14px) clamp(28px, 10vw, 44px); font-size:clamp(14px, 4vw, 17px); font-family:inherit; cursor:pointer;
     letter-spacing:2px; border-radius:4px; transition:all 0.2s;
     touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04), 0 4px 14px rgba(0,0,0,0.35);
   }
+  #overlay button:hover, .start-btn:hover {
+    background:rgba(60,245,139,0.1); box-shadow:0 0 0 1px #3cf58b, 0 8px 24px rgba(60,245,139,0.2);
+    transform:translateY(-2px);
+  }
+  .end-card {
+    background:rgba(0,0,0,0.35); border:1px solid #1a3a2a; border-radius:6px;
+    padding:18px 24px; max-width:min(520px,90vw); text-align:center;
+    box-shadow:0 8px 28px rgba(0,0,0,0.35);
+  }
+  .end-card h2 { font-size:clamp(22px,5vw,30px); letter-spacing:3px; margin-bottom:10px; }
+  .end-card .end-msg { color:#b8d4c3; font-size:clamp(12px,3vw,14px); line-height:1.7; white-space:pre-line; }
+  .end-card .end-advice { color:#7eb896; font-size:12px; line-height:1.6; margin-top:10px; }
+  .end-card .end-score { color:#3cf58b; font-size:13px; margin-top:12px; min-height:18px; }
   #tip-bar {
-    min-height:20px; display:flex; align-items:center; justify-content:center;
-    border-bottom:1px solid #1a3a2a; background:rgba(0,0,0,0.25); padding:3px 10px;
+    min-height:24px; display:flex; align-items:center; justify-content:center;
+    border-bottom:1px solid #1a3a2a; background:rgba(0,0,0,0.35); padding:4px 12px;
   }
-  #tip-text { font-size:clamp(9px, 2.2vw, 11px); color:#4a7a5a; text-align:center; }
+  #tip-text { font-size:clamp(9px, 2.2vw, 12px); color:#4a7a5a; text-align:center; letter-spacing:0.5px; }
+  #tip-text.active { color:#3cf58b; text-shadow:0 0 10px rgba(60,245,139,0.35); }
+  #tip-text.warn { color:#f0c030; text-shadow:0 0 10px rgba(240,192,48,0.35); }
   #intro {
     position:absolute; inset:0; z-index:20; background:#050705;
     display:flex; flex-direction:column; align-items:flex-start; justify-content:flex-start;
@@ -894,9 +935,10 @@ function rebuildCardHand(){
     if(card.spell==='killAll'&&game.emergencyUsed)d.classList.add('used-up');
     if(selectedCard===card)d.classList.add('selected');
     d.innerHTML=
+      `<div class="card-rarity-glow"></div>`+
       `<div class="card-inner">`+
         `<div class="card-pixel"><canvas id="pc-${i}" width="16" height="42"></canvas></div>`+
-        `<div class="card-header"><span class="card-name">${card.name}</span><span class="card-cost">${card.cost}</span></div>`+
+        `<div class="card-header"><span class="card-name">${card.name}</span></div>`+
         `<div class="card-body">`+
           `<span class="card-desc">${card.desc}</span>`+
           (statsHtml?`<div class="card-stats">${statsHtml}</div>`:'')+
@@ -904,7 +946,8 @@ function rebuildCardHand(){
         `<div class="card-footer">`+
           `<span class="card-tag ${tagClass}">${tagText}</span>`+
         `</div>`+
-      `</div>`;
+      `</div>`+
+      `<div class="card-cost-orb">${card.cost}</div>`;
     d.addEventListener('click', e => { e.stopPropagation(); onCardClick(card); });
     d.addEventListener('mouseenter', e => showTooltip(e, card));
     d.addEventListener('mouseleave', hideTooltip);
@@ -973,28 +1016,30 @@ function getCardKeywordHint(c){
 function updateTip(){
   const el=document.getElementById('tip-text');
   if(!el)return;
-  if(!game||game.gameOver){el.textContent=ROLE_HINTS[playerTeam]||'';el.style.color='#4a7a5a';return;}
+  if(!game||game.gameOver){el.textContent=ROLE_HINTS[playerTeam]||'';el.className='';return;}
   if(selectedCard){
     const c=selectedCard;
     const place=c.type==='spell'?'释放法术':'部署单位';
     const kw=getCardKeywordHint(c);
     el.textContent=`已选"${c.name}"· ${place}${kw?' · '+kw:''}`;
-    el.style.color=game.power<=c.cost?'#f0c030':'#5ab87a';
+    el.className=game.power<=c.cost?'warn':'active';
   }else{
     el.textContent=ROLE_HINTS[playerTeam];
-    el.style.color='#4a7a5a';
+    el.className='';
   }
 }
 function showTooltip(e,card){
   const t=document.getElementById('tooltip');
+  const accent=CARD_COLORS[card.id]||'#3cf58b';
+  t.style.setProperty('--card-accent',accent);
   const typeLabel=card.type==='flying'?'飞行·无视地面阻挡':card.type==='building'?(card.duration?'限时'+card.duration+'秒建筑':'永久建筑'):card.type==='spell'?'瞬发法术':'沿路前进自动交战';
   let stats=[];
   if(card.hp)stats.push(`HP ${card.hp}`);
   if(card.atk)stats.push(`ATK ${card.atk}${card.atkSpd?'/s':''}`);
   if(card.duration)stats.push(`持续 ${card.duration}s`);
-  const statsLine=stats.length?`<br><span style="color:#7eb896;font-size:10px">${stats.join(' · ')}</span>`:'';
-  t.innerHTML=`<b>${card.name}</b> · <span style="color:#3cf58b">${card.cost}算力</span>${statsLine}<br><span style="color:#8ab89a">${card.desc}</span><br><span style="color:#5a8a6a;font-size:10px">${typeLabel}</span>`;
-  t.style.display='block';t.style.left=Math.min(e.clientX+16,window.innerWidth-260)+'px';t.style.top=(e.clientY-100)+'px';
+  const statsLine=stats.length?`<div style="margin-top:6px;color:#7eb896;font-size:10px;letter-spacing:0.5px;">${stats.join(' · ')}</div>`:'';
+  t.innerHTML=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${accent};box-shadow:0 0 8px ${accent};"></span><b>${card.name}</b><span style="color:${accent};margin-left:auto;font-weight:bold;">${card.cost} 算力</span></div><div style="color:#8ab89a;line-height:1.5;">${card.desc}</div>${statsLine}<div style="margin-top:6px;color:#5a8a6a;font-size:10px;">${typeLabel}</div>`;
+  t.style.display='block';t.style.left=Math.min(e.clientX+16,window.innerWidth-280)+'px';t.style.top=(e.clientY-120)+'px';
 }
 function hideTooltip(){document.getElementById('tooltip').style.display='none';}
 
@@ -1302,8 +1347,12 @@ function loop(now){
   document.getElementById('core-display').textContent=Math.max(0,Math.round(playerCores.reduce((a,b)=>a+b,0)));
   document.getElementById('ai-core-display').textContent=Math.max(0,Math.round(aiCores.reduce((a,b)=>a+b,0)));
   for(let i=0;i<3;i++){
-    document.getElementById('core-bar-'+i).style.width=Math.max(0,(playerCores[i]/CORE_HP*100))+'%';
-    document.getElementById('ai-core-bar-'+i).style.width=Math.max(0,(aiCores[i]/CORE_HP*100))+'%';
+    const bar=document.getElementById('core-bar-'+i);
+    const aiBar=document.getElementById('ai-core-bar-'+i);
+    bar.style.width=Math.max(0,(playerCores[i]/CORE_HP*100))+'%';
+    aiBar.style.width=Math.max(0,(aiCores[i]/CORE_HP*100))+'%';
+    bar.classList.toggle('danger',playerCores[i]<=CORE_HP*0.35);
+    aiBar.classList.toggle('danger',aiCores[i]<=CORE_HP*0.35);
   }
   const m=Math.floor(game.time/60),s=Math.floor(game.time%60);
   const timeLeft=Math.max(0,GAME_TIME_LIMIT-game.time);
@@ -1324,14 +1373,15 @@ function endGame(winner,msg){
   const titleColor=winner==='draw'?'#f0c030':(playerWon?'#3cf58b':'#f53c3c');
   const titleText=winner==='draw'?'平局':(playerWon?'任务完成':'任务失败');
   const advice=generateEndGameAdvice(winner,playerWon);
-  const scoreLine=currentAccount?'<p id="score-result" style="color:#3cf58b;font-size:13px;min-height:18px;">正在同步积分...</p>':'';
+  const scoreLine=currentAccount?'<div class="end-score" id="score-result">正在同步积分...</div>':'';
+  const buttons=`<div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:6px;"><button id="restart-defend-btn">防守方（蓝队）</button><button id="restart-attack-btn">进攻方（红队）</button></div>`;
   if(tutorialDay>=0){
     const nextLabel=tutorialDay+1<TUTORIAL_STEPS.length?'进入下一天':'完成教学';
-    ov.innerHTML=`<h1 style="color:${titleColor}">${titleText}</h1><p style="white-space:pre-line">${msg}</p><p style="color:#7eb896;font-size:12px;max-width:min(500px,90vw);margin-top:-8px;">${advice}</p>${scoreLine}<div style="display:flex;gap:16px;justify-content:center;"><button id="tutorial-next-btn">${nextLabel}</button><button id="restart-defend-btn">防守方（蓝队）</button><button id="restart-attack-btn">进攻方（红队）</button></div>`;
+    ov.innerHTML=`<div class="end-card"><h2 style="color:${titleColor}">${titleText}</h2><div class="end-msg">${msg}</div><div class="end-advice">${advice}</div>${scoreLine}</div>${buttons}<div style="display:flex;gap:12px;justify-content:center;"><button id="tutorial-next-btn" style="border-color:#3c8cf5;color:#3c8cf5;">${nextLabel}</button></div>`;
     document.getElementById('tutorial-next-btn').addEventListener('click',()=>nextTutorialDayOrMenu());
     if(currentAccount)submitTutorialResult();
   }else{
-    ov.innerHTML=`<h1 style="color:${titleColor}">${titleText}</h1><p style="white-space:pre-line">${msg}</p><p style="color:#7eb896;font-size:12px;max-width:min(500px,90vw);margin-top:-8px;">${advice}</p>${scoreLine}<div style="display:flex;gap:16px;"><button id="restart-defend-btn">防守方（蓝队）</button><button id="restart-attack-btn">进攻方（红队）</button></div>`;
+    ov.innerHTML=`<div class="end-card"><h2 style="color:${titleColor}">${titleText}</h2><div class="end-msg">${msg}</div><div class="end-advice">${advice}</div>${scoreLine}</div>${buttons}`;
     if(currentAccount)submitMatchResult();
   }
   document.getElementById('restart-defend-btn').addEventListener('click',()=>{tutorialDay=-1;startGame('blue');});
