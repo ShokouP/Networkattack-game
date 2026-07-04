@@ -10,8 +10,8 @@
     },
     {
       "name": "lightspeed-grid",
-      "runtimeExecutable": "python",
-      "runtimeArgs": ["-m", "http.server", "3456"],
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["server.js"],
       "port": 3456,
       "cwd": "${workspaceFolder}"
     }

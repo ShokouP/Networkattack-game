@@ -293,7 +293,27 @@
     <div id="card-hand"></div>
   </div>
   <div id="intro"><span id="intro-line"></span><span id="intro-cursor"></span><div id="intro-skip">点击跳过 &gt;&gt;</div></div>
+  <div id="account-overlay" style="display:flex;position:absolute;inset:0;z-index:30;background:#050705;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:24px;text-align:center;">
+    <h1 style="color:#3cf58b;font-size:clamp(24px,6vw,36px);letter-spacing:4px;">光 速 城</h1>
+    <p style="color:#7eb896;font-size:clamp(11px,3vw,14px);">登录或创建账号以保存生涯积分、成就与头衔</p>
+    <div id="auth-error" style="color:#f53c3c;font-size:12px;min-height:16px;"></div>
+    <input id="auth-username" type="text" placeholder="用户名（3-12字符）" maxlength="12" style="background:#0a0c0f;border:1px solid #1a3a2a;color:#3cf58b;padding:10px 14px;font-family:inherit;width:min(280px,80vw);font-size:14px;outline:none;">
+    <input id="auth-password" type="password" placeholder="密码（至少6位）" style="background:#0a0c0f;border:1px solid #1a3a2a;color:#3cf58b;padding:10px 14px;font-family:inherit;width:min(280px,80vw);font-size:14px;outline:none;">
+    <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+      <button id="auth-login-btn" style="background:transparent;border:2px solid #3cf58b;color:#3cf58b;padding:10px 28px;font-family:inherit;cursor:pointer;font-size:14px;letter-spacing:1px;">登 录</button>
+      <button id="auth-register-btn" style="background:transparent;border:2px solid #7eb896;color:#7eb896;padding:10px 28px;font-family:inherit;cursor:pointer;font-size:14px;letter-spacing:1px;">创 建 账 号</button>
+    </div>
+    <button id="auth-guest-btn" style="background:transparent;border:1px solid #4a6b5a;color:#4a6b5a;padding:8px 20px;font-family:inherit;cursor:pointer;font-size:12px;letter-spacing:1px;">以访客身份游玩</button>
+  </div>
   <div id="overlay" style="pointer-events:auto; z-index:25;">
+    <div id="account-bar" style="position:absolute;top:10px;left:12px;right:12px;display:flex;justify-content:space-between;align-items:center;font-size:clamp(10px,2vw,13px);color:#7eb896;z-index:1;pointer-events:none;">
+      <span id="account-display">访客</span>
+      <span id="score-display"></span>
+    </div>
+    <div id="account-menu-bar" style="position:absolute;top:10px;right:12px;display:flex;gap:8px;z-index:2;">
+      <button id="profile-btn" style="background:transparent;border:1px solid #3cf58b;color:#3cf58b;padding:4px 10px;font-family:inherit;cursor:pointer;font-size:11px;letter-spacing:1px;">生涯档案</button>
+      <button id="switch-account-btn" style="background:transparent;border:1px solid #7eb896;color:#7eb896;padding:4px 10px;font-family:inherit;cursor:pointer;font-size:11px;letter-spacing:1px;">切换账号</button>
+    </div>
     <h1>光 速 城</h1>
     <p>Lightspeed Grid · 网络安全攻防<br>拖卡牌到战场部署 · 单位自动前进交战<br>左路暴露面 → 中路横向移动 → 右路核心资产区</p>
     <div style="display:flex;gap:16px;">
@@ -301,6 +321,19 @@
       <button id="start-attack-btn" class="start-btn" data-team="red">进 攻 方（红 队）</button>
     </div>
     <button id="start-tutorial-btn" class="start-btn" style="margin-top:8px;" data-tutorial="0">教 学 模 式（三 日 PvE）</button>
+  </div>
+  <div id="profile-panel" style="display:none;position:absolute;inset:0;z-index:35;background:rgba(5,7,5,0.96);flex-direction:column;align-items:center;gap:16px;padding:28px;overflow-y:auto;">
+    <h2 style="color:#3cf58b;letter-spacing:2px;">生涯档案</h2>
+    <div id="profile-summary" style="color:#7eb896;font-size:13px;text-align:center;line-height:1.6;"></div>
+    <div style="width:min(520px,90vw);border:1px solid #1a3a2a;padding:12px;background:rgba(0,0,0,0.3);">
+      <h3 style="color:#3cf58b;font-size:14px;margin-bottom:8px;">已解锁头衔</h3>
+      <div id="profile-titles" style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;"></div>
+    </div>
+    <div style="width:min(520px,90vw);border:1px solid #1a3a2a;padding:12px;background:rgba(0,0,0,0.3);">
+      <h3 style="color:#3cf58b;font-size:14px;margin-bottom:8px;">成就</h3>
+      <div id="profile-achievements" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;"></div>
+    </div>
+    <button id="close-profile-btn" style="background:transparent;border:2px solid #3cf58b;color:#3cf58b;padding:10px 28px;font-family:inherit;cursor:pointer;font-size:14px;letter-spacing:1px;">返 回</button>
   </div>
 </div>
 
@@ -327,6 +360,198 @@ const TUTORIAL_STEPS=[
   {day:1,team:'blue',title:'第三天：红蓝对抗',desc:'综合运用防守卡牌抵御完整攻击链。',aiDelay:2.5,powerBonus:0}
 ];
 let tutorialDay=-1,tutorialMessage='',tutorialTimer=0;
+
+const ACHIEVEMENTS=[
+  {id:'first_blood',name:'初出茅庐',desc:'完成第一场对局',category:'basic',reward:0},
+  {id:'first_win',name:'首胜',desc:'获得第一场胜利',category:'basic',reward:100},
+  {id:'tutorial_grad',name:'安全培训结业',desc:'完成教学模式',category:'basic',reward:150},
+  {id:'win_streak_3',name:'三连胜',desc:'连续获胜3场',category:'streak',reward:200},
+  {id:'win_streak_5',name:'五连胜',desc:'连续获胜5场',category:'streak',reward:500},
+  {id:'win_streak_10',name:'十连胜',desc:'连续获胜10场',category:'streak',reward:1000},
+  {id:'defender_5',name:'铜墙铁壁',desc:'蓝队获胜5场',category:'role',reward:200},
+  {id:'defender_20',name:'固若金汤',desc:'蓝队获胜20场',category:'role',reward:500},
+  {id:'attacker_5',name:'锋芒毕露',desc:'红队获胜5场',category:'role',reward:200},
+  {id:'attacker_20',name:'锐不可当',desc:'红队获胜20场',category:'role',reward:500},
+  {id:'perfect_win',name:'清场',desc:'以敌方核心全灭获胜',category:'performance',reward:300},
+  {id:'perfect_win_5',name:'横扫千军',desc:'清场获胜5次',category:'performance',reward:800},
+  {id:'speed_win',name:'速胜',desc:'120秒内获胜',category:'performance',reward:400},
+  {id:'speed_win_60',name:'闪电战',desc:'60秒内获胜',category:'performance',reward:800},
+  {id:'veteran',name:'老兵',desc:'完成50场对局',category:'milestone',reward:500},
+  {id:'master',name:'大师',desc:'完成100场对局',category:'milestone',reward:1000},
+  {id:'score_1500',name:'进阶',desc:'积分达到1500',category:'milestone',reward:300},
+  {id:'score_2000',name:'精英',desc:'积分达到2000',category:'milestone',reward:600},
+  {id:'score_2500',name:'传说',desc:'积分达到2500',category:'milestone',reward:1000}
+];
+const TITLES=[
+  {id:'rookie',name:'见习工程师',color:'#7eb896',unlock:'default'},
+  {id:'first_win',name:'安全卫士',color:'#3cf58b',unlock:'achievement:first_win'},
+  {id:'defender_5',name:'防火墙管理员',color:'#3c8cf5',unlock:'achievement:defender_5'},
+  {id:'defender_20',name:'SOC指挥官',color:'#2050d0',unlock:'achievement:defender_20'},
+  {id:'attacker_5',name:'渗透测试员',color:'#e04040',unlock:'achievement:attacker_5'},
+  {id:'attacker_20',name:'红队领袖',color:'#d02020',unlock:'achievement:attacker_20'},
+  {id:'win_streak_3',name:'连胜高手',color:'#f0c030',unlock:'achievement:win_streak_3'},
+  {id:'win_streak_5',name:'不败神话',color:'#e0b040',unlock:'achievement:win_streak_5'},
+  {id:'win_streak_10',name:'光速传奇',color:'#ff6b35',unlock:'achievement:win_streak_10'},
+  {id:'perfect_win',name:'清道夫',color:'#c030c0',unlock:'achievement:perfect_win'},
+  {id:'speed_win',name:'闪电侠',color:'#70c0f0',unlock:'achievement:speed_win'},
+  {id:'veteran',name:'资深分析师',color:'#a0c0aa',unlock:'achievement:veteran'},
+  {id:'master',name:'光速城守护者',color:'#3cf58b',unlock:'achievement:master'},
+  {id:'score_2000',name:'精英黑客',color:'#ff6b6b',unlock:'achievement:score_2000'},
+  {id:'score_2500',name:'光速之神',color:'#ffd700',unlock:'achievement:score_2500'}
+];
+
+// ── Account API layer ──
+const API_BASE='';
+let currentAccount=null;
+function getToken(){return localStorage.getItem('lg_token');}
+function setToken(t){if(t)localStorage.setItem('lg_token',t);else localStorage.removeItem('lg_token');}
+async function apiPost(path,body){
+  const opts={method:'POST',headers:{'Content-Type':'application/json'}};
+  const token=getToken();if(token)opts.headers['Authorization']='Bearer '+token;
+  if(body)opts.body=JSON.stringify(body);
+  const r=await fetch(API_BASE+path,opts);
+  const data=await r.json().catch(()=>({}));
+  if(!r.ok){const err=new Error(data.error||'Request failed');err.status=r.status;throw err;}
+  return data;
+}
+async function apiGet(path){
+  const opts={method:'GET',headers:{}};
+  const token=getToken();if(token)opts.headers['Authorization']='Bearer '+token;
+  const r=await fetch(API_BASE+path,opts);
+  const data=await r.json().catch(()=>({}));
+  if(!r.ok){const err=new Error(data.error||'Request failed');err.status=r.status;throw err;}
+  return data;
+}
+async function registerAccount(username,password){
+  const data=await apiPost('/api/auth/register',{username,password});
+  setToken(data.token);currentAccount=data.account;
+  updateAccountBar();return data.account;
+}
+async function loginAccount(username,password){
+  const data=await apiPost('/api/auth/login',{username,password});
+  setToken(data.token);currentAccount=data.account;
+  updateAccountBar();return data.account;
+}
+async function loadAccount(){
+  const token=getToken();if(!token){currentAccount=null;updateAccountBar();return null;}
+  try{
+    currentAccount=await apiGet('/api/account');
+    updateAccountBar();return currentAccount;
+  }catch(err){setToken(null);currentAccount=null;updateAccountBar();return null;}
+}
+async function setAccountTitle(titleId){
+  if(!currentAccount)return;
+  await apiPost('/api/account/title',{titleId});
+  currentAccount.title=titleId;updateAccountBar();
+}
+function offlineKey(){return 'lg_offline_'+getToken();}
+function saveOfflineResult(result){
+  const key=offlineKey();if(!key)return;
+  const arr=JSON.parse(localStorage.getItem(key)||'[]');arr.push(result);localStorage.setItem(key,JSON.stringify(arr));
+}
+function getOfflineResults(){
+  const key=offlineKey();if(!key)return[];
+  return JSON.parse(localStorage.getItem(key)||'[]');
+}
+function clearOfflineResults(){
+  const key=offlineKey();if(!key)return;localStorage.removeItem(key);
+}
+async function syncOfflineResults(){
+  const results=getOfflineResults();if(!results.length||!currentAccount)return;
+  for(const r of results){try{await submitGameResult(r,true);}catch(e){return;}}
+  clearOfflineResults();
+}
+async function submitGameResult(result,isSync){
+  if(!currentAccount)return null;
+  try{
+    const data=await apiPost('/api/game/end',result);
+    if(!isSync){
+      currentAccount.score=data.newScore;
+      currentAccount.stats=data.stats;
+      currentAccount.achievements=data.newAchievements.map(a=>a.id);
+      for(const t of data.newTitles)if(!currentAccount.titles.includes(t.id))currentAccount.titles.push(t.id);
+      updateAccountBar();showAccountRewards(data);
+    }
+    return data;
+  }catch(err){
+    if(!isSync)saveOfflineResult(result);
+    return null;
+  }
+}
+function showAccountRewards(data){
+  let msg='';
+  if(data.scoreChange>0)msg+=`积分 +${data.scoreChange} · `;
+  else if(data.scoreChange<0)msg+=`积分 ${data.scoreChange} · `;
+  msg+=`当前 ${data.newScore}`;
+  if(data.newAchievements.length)msg+=`\n解锁成就：${data.newAchievements.map(a=>a.name).join('、')}`;
+  if(data.newTitles.length)msg+=`\n解锁头衔：${data.newTitles.map(t=>t.name).join('、')}`;
+  showMessage(msg);
+}
+function titleById(id){return TITLES.find(t=>t.id===id)||TITLES[0];}
+function formatTitle(account){
+  const id=account&&account.title?account.title:'rookie';
+  const t=titleById(id);return `<span style="color:${t.color}">[${t.name}]</span>`;
+}
+function updateAccountBar(){
+  const disp=document.getElementById('account-display');
+  const score=document.getElementById('score-display');
+  const menu=document.getElementById('account-menu-bar');
+  if(!disp||!score)return;
+  if(!currentAccount){
+    disp.innerHTML='访客';score.textContent='';
+    if(menu)menu.style.display='none';
+  }else{
+    disp.innerHTML=formatTitle(currentAccount)+' '+currentAccount.username;
+    score.textContent='积分 '+currentAccount.score;
+    if(menu)menu.style.display='flex';
+  }
+}
+function renderProfile(){
+  if(!currentAccount)return;
+  const summary=document.getElementById('profile-summary');
+  const s=currentAccount.stats||{};
+  const title=titleById(currentAccount.title||'rookie');
+  summary.innerHTML=`${formatTitle(currentAccount)} ${currentAccount.username}<br>积分 <b style="color:#3cf58b">${currentAccount.score}</b><br>胜/负/平 ${s.wins||0}/${s.losses||0}/${s.draws||0} · 总场次 ${s.totalGames||0}<br>连胜 ${s.winStreak||0} · 最高连胜 ${s.maxWinStreak||0}`;
+  const titleCtr=document.getElementById('profile-titles');titleCtr.innerHTML='';
+  (currentAccount.titles||[]).forEach(tid=>{
+    const t=titleById(tid);
+    const el=document.createElement('div');
+    el.style.cssText=`border:1px solid ${t.color};color:${t.color};padding:4px 10px;font-size:12px;cursor:pointer;${currentAccount.title===tid?'background:rgba(255,255,255,0.08);':''}`;
+    el.textContent='['+t.name+']';el.title=t.name;
+    el.addEventListener('click',()=>{setAccountTitle(tid);renderProfile();});
+    titleCtr.appendChild(el);
+  });
+  const achCtr=document.getElementById('profile-achievements');achCtr.innerHTML='';
+  ACHIEVEMENTS.forEach(a=>{
+    const unlocked=(currentAccount.achievements||[]).includes(a.id);
+    const el=document.createElement('div');
+    el.style.cssText=`border:1px solid ${unlocked?'#3cf58b':'#1a3a2a'};padding:6px 8px;background:${unlocked?'rgba(60,245,139,0.08)':'rgba(0,0,0,0.25)'};opacity:${unlocked?1:0.55};`;
+    el.innerHTML=`<div style="font-size:12px;color:${unlocked?'#3cf58b':'#7eb896'}">${a.name}</div><div style="font-size:10px;color:#5a7a6a">${a.desc}</div>`;
+    achCtr.appendChild(el);
+  });
+}
+function openProfilePanel(){if(!currentAccount)return;renderProfile();document.getElementById('profile-panel').style.display='flex';}
+function closeProfilePanel(){document.getElementById('profile-panel').style.display='none';}
+function showAuthOverlay(){document.getElementById('account-overlay').style.display='flex';document.getElementById('overlay').style.display='none';}
+function hideAuthOverlay(){document.getElementById('account-overlay').style.display='none';document.getElementById('overlay').style.display='flex';}
+function switchAccount(){setToken(null);currentAccount=null;updateAccountBar();showAuthOverlay();}
+
+// ── Auth event bindings ──
+(function initAccountUI(){
+  const errEl=document.getElementById('auth-error');
+  const uEl=document.getElementById('auth-username');
+  const pEl=document.getElementById('auth-password');
+  function setErr(msg){if(errEl)errEl.textContent=msg||'';}
+  async function doLogin(){setErr('');try{await loginAccount(uEl.value.trim(),pEl.value);hideAuthOverlay();}catch(e){setErr(e.message||'登录失败');}}
+  async function doRegister(){setErr('');try{await registerAccount(uEl.value.trim(),pEl.value);hideAuthOverlay();}catch(e){setErr(e.message||'注册失败');}}
+  document.getElementById('auth-login-btn').addEventListener('click',doLogin);
+  document.getElementById('auth-register-btn').addEventListener('click',doRegister);
+  document.getElementById('auth-guest-btn').addEventListener('click',()=>{setErr('');hideAuthOverlay();});
+  document.getElementById('profile-btn').addEventListener('click',openProfilePanel);
+  document.getElementById('switch-account-btn').addEventListener('click',switchAccount);
+  document.getElementById('close-profile-btn').addEventListener('click',closeProfilePanel);
+  loadAccount();
+})();
 
 const BLUE_CARDS=[
   {id:'firewall',name:'防火墙',cost:2,type:'building',hp:700,atk:0,atkSpd:0,range:0,speed:0,duration:0,desc:'纯阻挡，横跨路面',tag:'建筑',color:'#3c8cf5'},
@@ -1017,16 +1242,51 @@ function endGame(winner,msg){
   const titleColor=winner==='draw'?'#f0c030':(playerWon?'#3cf58b':'#f53c3c');
   const titleText=winner==='draw'?'平局':(playerWon?'任务完成':'任务失败');
   const advice=generateEndGameAdvice(winner,playerWon);
+  const scoreLine=currentAccount?'<p id="score-result" style="color:#3cf58b;font-size:13px;min-height:18px;">正在同步积分...</p>':'';
   if(tutorialDay>=0){
     const nextLabel=tutorialDay+1<TUTORIAL_STEPS.length?'进入下一天':'完成教学';
-    ov.innerHTML=`<h1 style="color:${titleColor}">${titleText}</h1><p style="white-space:pre-line">${msg}</p><p style="color:#7eb896;font-size:12px;max-width:min(500px,90vw);margin-top:-8px;">${advice}</p><div style="display:flex;gap:16px;justify-content:center;"><button id="tutorial-next-btn">${nextLabel}</button><button id="restart-defend-btn">防守方（蓝队）</button><button id="restart-attack-btn">进攻方（红队）</button></div>`;
+    ov.innerHTML=`<h1 style="color:${titleColor}">${titleText}</h1><p style="white-space:pre-line">${msg}</p><p style="color:#7eb896;font-size:12px;max-width:min(500px,90vw);margin-top:-8px;">${advice}</p>${scoreLine}<div style="display:flex;gap:16px;justify-content:center;"><button id="tutorial-next-btn">${nextLabel}</button><button id="restart-defend-btn">防守方（蓝队）</button><button id="restart-attack-btn">进攻方（红队）</button></div>`;
     document.getElementById('tutorial-next-btn').addEventListener('click',()=>nextTutorialDayOrMenu());
+    if(currentAccount)submitTutorialResult();
   }else{
-    ov.innerHTML=`<h1 style="color:${titleColor}">${titleText}</h1><p style="white-space:pre-line">${msg}</p><p style="color:#7eb896;font-size:12px;max-width:min(500px,90vw);margin-top:-8px;">${advice}</p><div style="display:flex;gap:16px;"><button id="restart-defend-btn">防守方（蓝队）</button><button id="restart-attack-btn">进攻方（红队）</button></div>`;
+    ov.innerHTML=`<h1 style="color:${titleColor}">${titleText}</h1><p style="white-space:pre-line">${msg}</p><p style="color:#7eb896;font-size:12px;max-width:min(500px,90vw);margin-top:-8px;">${advice}</p>${scoreLine}<div style="display:flex;gap:16px;"><button id="restart-defend-btn">防守方（蓝队）</button><button id="restart-attack-btn">进攻方（红队）</button></div>`;
+    if(currentAccount)submitMatchResult();
   }
   document.getElementById('restart-defend-btn').addEventListener('click',()=>{tutorialDay=-1;startGame('blue');});
   document.getElementById('restart-attack-btn').addEventListener('click',()=>{tutorialDay=-1;startGame('red');});
   updateTip();
+}
+async function submitMatchResult(){
+  const playerCores=playerTeam==='blue'?game.coreHpPerLane:game.aiCoreHpPerLane;
+  const aiCores=playerTeam==='blue'?game.aiCoreHpPerLane:game.coreHpPerLane;
+  const playerCoreTotal=Math.max(0,Math.round(playerCores.reduce((a,b)=>a+b,0)));
+  const aiCoreTotal=Math.max(0,Math.round(aiCores.reduce((a,b)=>a+b,0)));
+  const totalKills=game.units.reduce((a,u)=>a+(u.alive?0:1),0);
+  const towersDestroyed=game.towers.filter(t=>!t.alive&&t.team!==playerTeam).length;
+  const result={
+    playerTeam,
+    winner:game.winner,
+    duration:Math.min(GAME_TIME_LIMIT,Math.max(0,game.time)),
+    playerCoreTotal,
+    aiCoreTotal,
+    totalKills,
+    towersDestroyed,
+    tutorial:false
+  };
+  const data=await submitGameResult(result,false);
+  const el=document.getElementById('score-result');if(!el)return;
+  if(data){
+    let html=`积分 <b>${data.scoreChange>0?'+':''}${data.scoreChange}</b> · 当前 <b>${data.newScore}</b>`;
+    if(data.newAchievements.length)html+=`<br>解锁成就：${data.newAchievements.map(a=>a.name).join('、')}`;
+    if(data.newTitles.length)html+=`<br>解锁头衔：${data.newTitles.map(t=>t.name).join('、')}`;
+    el.innerHTML=html;
+  }else{
+    el.textContent='同步失败，结果已本地缓存，联网后自动同步。';
+  }
+}
+async function submitTutorialResult(){
+  const result={playerTeam,winner:game.winner,duration:Math.min(GAME_TIME_LIMIT,Math.max(0,game.time)),playerCoreTotal:0,aiCoreTotal:0,totalKills:0,towersDestroyed:0,tutorial:true};
+  await submitGameResult(result,false);
 }
 function generateEndGameAdvice(winner,playerWon){
   if(winner==='draw')return '双方势均力敌。尝试调整卡组节奏，抓住对手费用空档。';
